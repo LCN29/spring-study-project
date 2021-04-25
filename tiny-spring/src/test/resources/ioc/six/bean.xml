@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans">
+
+    <bean name="anotherService" class="com.lcn29.ioc.six.service.AnotherServiceImpl">
+        <property name="helloWorldService" ref="helloWorldService"></property>
+    </bean>
+
+    <bean name="helloWorldService" class="com.lcn29.ioc.six.service.HelloWorldServiceImpl">
+        <property name="anotherWorld" value="Six ."></property>
+        <property name="anotherService" ref="anotherService"></property>
+    </bean>
+
+</beans>
