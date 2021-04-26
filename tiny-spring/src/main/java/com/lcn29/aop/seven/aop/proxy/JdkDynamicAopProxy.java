@@ -13,7 +13,7 @@ import java.lang.reflect.Proxy;
  * JDK 动态代理实现类
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-22 16:50
  */
 public class JdkDynamicAopProxy implements AopProxy, InvocationHandler {

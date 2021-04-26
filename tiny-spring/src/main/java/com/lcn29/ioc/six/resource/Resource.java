@@ -8,7 +8,7 @@ import java.io.InputStream;
  *  资源接口定义
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-22 09:29
  */
 public interface Resource {

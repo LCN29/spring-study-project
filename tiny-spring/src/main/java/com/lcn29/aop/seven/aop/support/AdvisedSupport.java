@@ -6,7 +6,7 @@ import org.aopalliance.intercept.MethodInterceptor;
 
 /**
  * <pre>
- *
+ *  代理包装类的元数据
  * </pre>
  *
  * @author lcn29

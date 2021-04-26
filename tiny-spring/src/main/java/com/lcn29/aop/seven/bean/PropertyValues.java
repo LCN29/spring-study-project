@@ -1,5 +1,7 @@
 package com.lcn29.aop.seven.bean;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +13,13 @@ import java.util.List;
  *
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-21 22:30
  */
+@Getter
 public class PropertyValues {
 
-    private final List<PropertyValue> propertyValueList = new ArrayList<>();
+    private final List<PropertyValue> propertyValues = new ArrayList<>();
 
 
     public PropertyValues() {
@@ -24,11 +27,7 @@ public class PropertyValues {
 
     public void addPropertyValue(PropertyValue pv) {
         // TODO 这里可以对于重复 propertyName 进行判断，直接用 list 没法做到
-        this.propertyValueList.add(pv);
-    }
-
-    public List<PropertyValue> getPropertyValues() {
-        return this.propertyValueList;
+        this.propertyValues.add(pv);
     }
 
 }

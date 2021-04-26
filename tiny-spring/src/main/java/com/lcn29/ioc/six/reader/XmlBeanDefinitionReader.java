@@ -18,7 +18,7 @@ import java.io.InputStream;
  * xml 文件加载 BeanDefinition 的读取器
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-22 11:45
  */
 public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {

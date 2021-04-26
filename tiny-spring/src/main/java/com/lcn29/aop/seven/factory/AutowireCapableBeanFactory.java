@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
  * 自动装配 Bean 容器
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-21 22:05
  */
 public class AutowireCapableBeanFactory extends AbstractBeanFactory {

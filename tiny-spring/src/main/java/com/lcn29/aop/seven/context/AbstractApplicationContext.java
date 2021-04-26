@@ -8,7 +8,7 @@ import com.lcn29.aop.seven.factory.AbstractBeanFactory;
  * 抽象的上下文
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-22 16:09
  */
 public abstract class AbstractApplicationContext implements ApplicationContext {

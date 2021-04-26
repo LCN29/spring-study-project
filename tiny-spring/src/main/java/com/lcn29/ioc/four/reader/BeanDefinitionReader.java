@@ -5,7 +5,7 @@ package com.lcn29.ioc.four.reader;
  * Bean 定义读取接口
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-22 09:27
  */
 public interface BeanDefinitionReader {

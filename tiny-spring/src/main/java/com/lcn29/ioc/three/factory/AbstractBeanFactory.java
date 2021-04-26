@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Bean 容器抽象实现
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-21 22:03
  */
 public abstract class AbstractBeanFactory implements BeanFactory {

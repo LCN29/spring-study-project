@@ -34,6 +34,11 @@
             <artifactId>aopalliance</artifactId>
         </dependency>
 
+        <!--   aspect 依赖   -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

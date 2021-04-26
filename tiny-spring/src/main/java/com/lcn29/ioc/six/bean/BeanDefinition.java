@@ -1,13 +1,19 @@
 package com.lcn29.ioc.six.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * <pre>
  * Bean 声明定义
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-21 22:28
  */
+
+@Getter
+@Setter
 public class BeanDefinition {
 
     private Object bean;
@@ -21,22 +27,6 @@ public class BeanDefinition {
     public BeanDefinition() {
     }
 
-    public void setBean(Object bean) {
-        this.bean = bean;
-    }
-
-    public Class getBeanClass() {
-        return beanClass;
-    }
-
-    public void setBeanClass(Class beanClass) {
-        this.beanClass = beanClass;
-    }
-
-    public String getBeanClassName() {
-        return beanClassName;
-    }
-
     public void setBeanClassName(String beanClassName) {
         this.beanClassName = beanClassName;
         try {
@@ -46,15 +36,4 @@ public class BeanDefinition {
         }
     }
 
-    public Object getBean() {
-        return bean;
-    }
-
-    public PropertyValues getPropertyValues() {
-        return propertyValues;
-    }
-
-    public void setPropertyValues(PropertyValues propertyValues) {
-        this.propertyValues = propertyValues;
-    }
 }

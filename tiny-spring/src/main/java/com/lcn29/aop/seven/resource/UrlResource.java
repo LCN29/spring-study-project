@@ -10,7 +10,7 @@ import java.net.URLConnection;
  * Url 资源
  * </pre>
  *
- * @author canxin.li
+ * @author lcn29
  * @date 2021-04-22 09:35
  */
 public class UrlResource implements Resource {
