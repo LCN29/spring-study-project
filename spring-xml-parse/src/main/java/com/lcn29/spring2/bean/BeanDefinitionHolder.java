@@ -1,21 +1,16 @@
-package com.lcn29.spring.bean;
+package com.lcn29.spring2.bean;
 
-
-import com.sun.istack.internal.Nullable;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * <pre>
- *  BeanDefinition 的句柄, 多一层包装
+ *
  * </pre>
  *
  * @author lcn29
- * @date 2021-04-27 20:41
+ * @date 2021-04-27 17:43
  */
-
-@Getter
-@Setter
+@Data
 public class BeanDefinitionHolder implements BeanMetadataElement {
 
     private final BeanDefinition beanDefinition;

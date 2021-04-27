@@ -1,11 +1,11 @@
-package com.lcn29.spring.xml;
+package com.lcn29.spring2.xml;
 
-import com.lcn29.spring.bean.AbstractBeanDefinition;
-import com.lcn29.spring.bean.BeanDefinition;
-import com.lcn29.spring.bean.BeanDefinitionHolder;
-import com.lcn29.spring.util.BeanDefinitionReaderUtils;
-import com.lcn29.spring.util.CollectionUtils;
-import com.lcn29.spring.util.StringUtils;
+import com.lcn29.spring2.bean.AbstractBeanDefinition;
+import com.lcn29.spring2.bean.BeanDefinition;
+import com.lcn29.spring2.bean.BeanDefinitionHolder;
+import com.lcn29.spring2.util.BeanDefinitionReaderUtils;
+import com.lcn29.spring2.util.CollectionUtils;
+import com.lcn29.spring2.util.StringUtils;
 import com.sun.istack.internal.Nullable;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

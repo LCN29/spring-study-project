@@ -1,4 +1,4 @@
-package com.lcn29.spring.xml;
+package com.lcn29.spring2.xml;
 
 import java.util.EventListener;
 

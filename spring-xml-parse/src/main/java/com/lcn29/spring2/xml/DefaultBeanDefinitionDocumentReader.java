@@ -1,9 +1,9 @@
-package com.lcn29.spring.xml;
+package com.lcn29.spring2.xml;
 
-import com.lcn29.spring.bean.BeanDefinitionHolder;
-import com.lcn29.spring.exception.BeanDefinitionStoreException;
-import com.lcn29.spring.util.BeanDefinitionReaderUtils;
-import com.lcn29.spring.util.StringUtils;
+import com.lcn29.spring2.bean.BeanDefinitionHolder;
+import com.lcn29.spring2.exception.BeanDefinitionStoreException;
+import com.lcn29.spring2.util.BeanDefinitionReaderUtils;
+import com.lcn29.spring2.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

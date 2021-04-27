@@ -1,8 +1,7 @@
-package com.lcn29.spring.xml;
+package com.lcn29.spring2.xml;
 
-import com.lcn29.spring.exception.BeanDefinitionStoreException;
-import com.lcn29.spring.resource.Resource;
-import com.sun.istack.internal.Nullable;
+import com.lcn29.spring2.exception.BeanDefinitionStoreException;
+import com.lcn29.spring2.resource.Resource;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package com.lcn29.spring.util;
+package com.lcn29.spring2.util;
 
 import com.sun.istack.internal.Nullable;
 
@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 /**
  * <pre>
- * String 字符串工具类
+ *
  * </pre>
  *
  * @author lcn29
@@ -67,7 +67,8 @@ public class StringUtils {
                 newPath += "/";
             }
             return newPath + relativePath;
-        } else {
+        }
+        else {
             return relativePath;
         }
     }

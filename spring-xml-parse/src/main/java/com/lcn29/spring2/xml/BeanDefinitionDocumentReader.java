@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.lcn29.spring.xml;
+package com.lcn29.spring2.xml;
 
-import com.lcn29.spring.exception.BeanDefinitionStoreException;
+import com.lcn29.spring2.exception.BeanDefinitionStoreException;
 import org.w3c.dom.Document;
 
 /**

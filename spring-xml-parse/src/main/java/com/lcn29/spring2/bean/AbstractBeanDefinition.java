@@ -1,5 +1,4 @@
-package com.lcn29.spring.bean;
-
+package com.lcn29.spring2.bean;
 
 /**
  * <pre>

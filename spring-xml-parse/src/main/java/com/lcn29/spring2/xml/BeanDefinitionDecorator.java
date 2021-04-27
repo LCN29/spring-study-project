@@ -1,6 +1,6 @@
-package com.lcn29.spring.xml;
+package com.lcn29.spring2.xml;
 
-import com.lcn29.spring.bean.BeanDefinitionHolder;
+import com.lcn29.spring2.bean.BeanDefinitionHolder;
 import com.sun.xml.internal.xsom.impl.parser.ParserContext;
 import org.w3c.dom.Node;
 

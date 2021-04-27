@@ -6,7 +6,7 @@ package com.lcn29.spring.resource;
  * </pre>
  *
  * @author lcn29
- * @date 2021-04-27 20:35
+ * @date 2021-04-27 20:36
  */
-public interface Resource extends InputStreamSource {
+public abstract class AbstractResource implements Resource {
 }

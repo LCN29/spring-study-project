@@ -1,4 +1,4 @@
-package com.lcn29.spring.bean;
+package com.lcn29.spring2.bean;
 
 /**
  * <pre>
@@ -6,8 +6,9 @@ package com.lcn29.spring.bean;
  * </pre>
  *
  * @author lcn29
- * @date 2021-04-27 20:40
+ * @date 2021-04-27 17:42
  */
 public interface BeanMetadataElement {
+
     Object getSource();
 }

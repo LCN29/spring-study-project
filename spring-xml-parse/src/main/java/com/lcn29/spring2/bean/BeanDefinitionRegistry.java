@@ -1,6 +1,6 @@
-package com.lcn29.spring.bean;
+package com.lcn29.spring2.bean;
 
-import com.lcn29.spring.exception.BeanDefinitionStoreException;
+import com.lcn29.spring2.exception.BeanDefinitionStoreException;
 
 /**
  * <pre>

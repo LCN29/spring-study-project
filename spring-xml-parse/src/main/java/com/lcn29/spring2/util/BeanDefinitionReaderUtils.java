@@ -1,13 +1,13 @@
-package com.lcn29.spring.util;
+package com.lcn29.spring2.util;
 
-import com.lcn29.spring.bean.BeanDefinition;
-import com.lcn29.spring.bean.BeanDefinitionHolder;
-import com.lcn29.spring.registry.BeanDefinitionRegistry;
-import com.lcn29.spring.exception.BeanDefinitionStoreException;
+import com.lcn29.spring2.bean.BeanDefinition;
+import com.lcn29.spring2.bean.BeanDefinitionHolder;
+import com.lcn29.spring2.bean.BeanDefinitionRegistry;
+import com.lcn29.spring2.exception.BeanDefinitionStoreException;
 
 /**
  * <pre>
- *  BeanDefinitionReader 读取工具类
+ *
  * </pre>
  *
  * @author lcn29
@@ -40,7 +40,8 @@ public class BeanDefinitionReaderUtils {
         if (generatedBeanName == null) {
             if (definition.getParentName() != null) {
                 generatedBeanName = definition.getParentName() + "$child";
-            } else if (definition.getFactoryBeanName() != null) {
+            }
+            else if (definition.getFactoryBeanName() != null) {
                 generatedBeanName = definition.getFactoryBeanName() + "$created";
             }
         }
@@ -53,7 +54,8 @@ public class BeanDefinitionReaderUtils {
         if (isInnerBean) {
             // Inner bean: generate identity hashcode suffix.
             id = generatedBeanName + "#" + ObjectUtils.getIdentityHexString(definition);
-        } else {
+        }
+        else {
             // Top-level bean: use plain class name with unique suffix if necessary.
             return uniqueBeanName(generatedBeanName, registry);
         }

@@ -2,15 +2,19 @@ package com.lcn29.spring.exception;
 
 /**
  * <pre>
- *
+ * BeanDefinition 注册失败
  * </pre>
  *
  * @author lcn29
- * @date 2021-04-27 17:37
+ * @date 2021-04-27 20:29
  */
-public class BeanDefinitionStoreException extends Exception{
+public class BeanDefinitionStoreException extends RuntimeException {
+
+    public BeanDefinitionStoreException() {
+    }
 
     public BeanDefinitionStoreException(String msg) {
         super(msg);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.lcn29.spring.util;
+package com.lcn29.spring2.util;
 
 import java.net.URI;
 import java.net.URISyntaxException;

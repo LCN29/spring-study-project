@@ -1,6 +1,6 @@
-package com.lcn29.spring.xml;
+package com.lcn29.spring2.xml;
 
-import com.lcn29.spring.resource.Resource;
+import com.lcn29.spring2.resource.Resource;
 import lombok.Data;
 
 /**

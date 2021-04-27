@@ -1,4 +1,4 @@
-package com.lcn29.spring.util;
+package com.lcn29.spring2.util;
 
 import com.sun.istack.internal.Nullable;
 
@@ -6,7 +6,7 @@ import java.util.Collection;
 
 /**
  * <pre>
- *  Collection 集合工具类
+ *
  * </pre>
  *
  * @author lcn29

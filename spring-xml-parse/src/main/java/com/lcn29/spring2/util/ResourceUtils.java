@@ -1,4 +1,4 @@
-package com.lcn29.spring.util;
+package com.lcn29.spring2.util;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -7,7 +7,7 @@ import java.net.URL;
 
 /**
  * <pre>
- *  Resource 资源工具类
+ *
  * </pre>
  *
  * @author lcn29
@@ -16,7 +16,6 @@ import java.net.URL;
 public class ResourceUtils {
 
     public static boolean isUrl(String resourceLocation) {
-
         if (resourceLocation == null) {
             return false;
         }
@@ -26,7 +25,8 @@ public class ResourceUtils {
         try {
             new URL(resourceLocation);
             return true;
-        } catch (MalformedURLException ex) {
+        }
+        catch (MalformedURLException ex) {
             return false;
         }
     }

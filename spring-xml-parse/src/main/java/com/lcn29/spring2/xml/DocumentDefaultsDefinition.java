@@ -1,6 +1,5 @@
-package com.lcn29.spring.xml;
+package com.lcn29.spring2.xml;
 
-import com.sun.istack.internal.Nullable;
 import lombok.Data;
 
 /**
