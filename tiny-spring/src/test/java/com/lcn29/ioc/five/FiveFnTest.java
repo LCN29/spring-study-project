@@ -5,7 +5,6 @@ import com.lcn29.ioc.five.factory.AbstractBeanFactory;
 import com.lcn29.ioc.five.factory.AutowireCapableBeanFactory;
 import com.lcn29.ioc.five.factory.BeanFactory;
 import com.lcn29.ioc.five.loader.ResourceLoader;
-import com.lcn29.ioc.five.service.AnotherServiceImpl;
 import com.lcn29.ioc.five.reader.XmlBeanDefinitionReader;
 import com.lcn29.ioc.five.service.HelloWorldServiceImpl;
 import org.junit.Test;
