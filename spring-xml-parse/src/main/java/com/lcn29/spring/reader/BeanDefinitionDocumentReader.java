@@ -1,7 +1,6 @@
 package com.lcn29.spring.reader;
 
-import com.lcn29.spring2.exception.BeanDefinitionStoreException;
-import com.lcn29.spring2.xml.XmlReaderContext;
+import com.lcn29.spring.exception.BeanDefinitionStoreException;
 import org.w3c.dom.Document;
 
 /**
@@ -14,6 +13,12 @@ import org.w3c.dom.Document;
  */
 public interface BeanDefinitionDocumentReader {
 
-    void registerBeanDefinitions(Document doc, XmlReaderContext readerContext)
-            throws BeanDefinitionStoreException;
+    /**
+     * 开始 Document 的读取和 BeanDefinition 的注册
+     *
+     * @param doc
+     * @param readerContext
+     * @throws BeanDefinitionStoreException
+     */
+    void registerBeanDefinitions(Document doc, XmlReaderContext readerContext) throws BeanDefinitionStoreException;
 }

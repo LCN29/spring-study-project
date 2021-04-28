@@ -1,9 +1,11 @@
 package com.lcn29.spring.util;
 
+import com.lcn29.spring.bean.AbstractBeanDefinition;
 import com.lcn29.spring.bean.BeanDefinition;
 import com.lcn29.spring.bean.BeanDefinitionHolder;
 import com.lcn29.spring.registry.BeanDefinitionRegistry;
 import com.lcn29.spring.exception.BeanDefinitionStoreException;
+import com.sun.istack.internal.Nullable;
 
 /**
  * <pre>
@@ -70,5 +72,21 @@ public class BeanDefinitionReaderUtils {
             id = beanName + "#" + counter;
         }
         return id;
+    }
+
+    public static AbstractBeanDefinition createBeanDefinition(
+    String parentName, String className, ClassLoader classLoader) throws ClassNotFoundException {
+
+        GenericBeanDefinition bd = new GenericBeanDefinition();
+        bd.setParentName(parentName);
+        if (className != null) {
+            if (classLoader != null) {
+                bd.setBeanClass(ClassUtils.forName(className, classLoader));
+            }
+            else {
+                bd.setBeanClassName(className);
+            }
+        }
+        return bd;
     }
 }

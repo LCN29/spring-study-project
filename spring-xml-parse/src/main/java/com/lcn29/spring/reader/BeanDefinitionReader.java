@@ -1,5 +1,7 @@
 package com.lcn29.spring.reader;
 
+import com.lcn29.spring.registry.BeanDefinitionRegistry;
+
 /**
  * <pre>
  *
@@ -10,4 +12,11 @@ package com.lcn29.spring.reader;
  */
 public interface BeanDefinitionReader {
 
+    /**
+     * 获取当前的 BeanDefinition 容器
+     * @return
+     */
+    BeanDefinitionRegistry getRegistry();
+
+    ClassLoader getBeanClassLoader();
 }

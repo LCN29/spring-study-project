@@ -1,5 +1,7 @@
 package com.lcn29.spring.exception;
 
+import com.sun.istack.internal.Nullable;
+
 /**
  * <pre>
  * BeanDefinition 注册失败
@@ -15,6 +17,10 @@ public class BeanDefinitionStoreException extends RuntimeException {
 
     public BeanDefinitionStoreException(String msg) {
         super(msg);
+    }
+
+    public BeanDefinitionStoreException(String msg, Throwable cause) {
+        super(msg, cause);
     }
 
 }
