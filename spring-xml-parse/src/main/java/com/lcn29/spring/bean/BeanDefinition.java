@@ -1,6 +1,8 @@
 package com.lcn29.spring.bean;
 
 
+import com.sun.istack.internal.Nullable;
+
 /**
  * <pre>
  *
@@ -19,16 +21,13 @@ public interface BeanDefinition extends BeanMetadataElement {
     String getBeanClassName();
 
     /**
-     * 返回这个 beanDefinition 的 父级 beanDefinition, 如果有的话
-     *
-     * @return
-     */
-    String getParentName();
-
-    /**
      * 返回这个 beanDefinition 的 FactoryBean 名, 如果有的话
      *
      * @return
      */
     String getFactoryBeanName();
+
+    String getParentName();
+
+    void setParentName(String parentName);
 }

@@ -3,6 +3,7 @@ package com.lcn29.spring.util;
 import com.lcn29.spring.bean.AbstractBeanDefinition;
 import com.lcn29.spring.bean.BeanDefinition;
 import com.lcn29.spring.bean.BeanDefinitionHolder;
+import com.lcn29.spring.bean.GenericBeanDefinition;
 import com.lcn29.spring.registry.BeanDefinitionRegistry;
 import com.lcn29.spring.exception.BeanDefinitionStoreException;
 import com.sun.istack.internal.Nullable;
@@ -34,8 +35,7 @@ public class BeanDefinitionReaderUtils {
         }
     }
 
-    public static String generateBeanName(
-            BeanDefinition definition, BeanDefinitionRegistry registry, boolean isInnerBean)
+    public static String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry, boolean isInnerBean)
             throws BeanDefinitionStoreException {
 
         String generatedBeanName = definition.getBeanClassName();
@@ -74,16 +74,14 @@ public class BeanDefinitionReaderUtils {
         return id;
     }
 
-    public static AbstractBeanDefinition createBeanDefinition(
-    String parentName, String className, ClassLoader classLoader) throws ClassNotFoundException {
+    public static AbstractBeanDefinition createBeanDefinition(String parentName, String className, ClassLoader classLoader) throws ClassNotFoundException {
 
         GenericBeanDefinition bd = new GenericBeanDefinition();
         bd.setParentName(parentName);
         if (className != null) {
             if (classLoader != null) {
                 bd.setBeanClass(ClassUtils.forName(className, classLoader));
-            }
-            else {
+            } else {
                 bd.setBeanClassName(className);
             }
         }
