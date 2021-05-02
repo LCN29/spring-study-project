@@ -16,16 +16,9 @@ import java.util.Map;
  */
 public class ClassUtils {
 
-    /**
-     * Map with primitive type name as key and corresponding primitive
-     * type as value, for example: "int" -> "int.class".
-     */
+
     private static final Map<String, Class<?>> primitiveTypeNameMap = new HashMap<>(32);
 
-    /**
-     * Map with common Java language class name as key and corresponding Class as value.
-     * Primarily for efficient deserialization of remote invocations.
-     */
     private static final Map<String, Class<?>> commonClassCache = new HashMap<>(64);
 
     public static Class<?> forName(String name, ClassLoader classLoader) throws ClassNotFoundException, LinkageError {
@@ -115,4 +108,9 @@ public class ClassUtils {
         }
         return cl;
     }
+
+    public static boolean matchesTypeName(Class<?> clazz, @Nullable String typeName) {
+        return (typeName != null && (typeName.equals(clazz.getTypeName()) || typeName.equals(clazz.getSimpleName())));
+    }
+
 }

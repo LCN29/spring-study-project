@@ -1,5 +1,7 @@
 package com.lcn29.spring.reader;
 
+import com.lcn29.spring.bean.BeanDefinition;
+import com.lcn29.spring.bean.NamespaceHandlerResolver;
 import com.lcn29.spring.registry.BeanDefinitionRegistry;
 import com.lcn29.spring.resource.Resource;
 
@@ -15,9 +17,12 @@ public class XmlReaderContext extends ReaderContext {
 
     private final XmlBeanDefinitionReader reader;
 
-    public XmlReaderContext(Resource resource, XmlBeanDefinitionReader reader) {
-        super(resource);
+    private final NamespaceHandlerResolver namespaceHandlerResolver;
+
+    public XmlReaderContext(Resource resource, SourceExtractor sourceExtractor, XmlBeanDefinitionReader reader,  NamespaceHandlerResolver namespaceHandlerResolver) {
+        super(resource, sourceExtractor);
         this.reader = reader;
+        this.namespaceHandlerResolver = namespaceHandlerResolver;
     }
 
     public final BeanDefinitionRegistry getRegistry() {
@@ -26,5 +31,13 @@ public class XmlReaderContext extends ReaderContext {
 
     public final ClassLoader getBeanClassLoader() {
         return this.reader.getBeanClassLoader();
+    }
+
+    public String generateBeanName(BeanDefinition beanDefinition) {
+        return this.reader.getBeanNameGenerator().generateBeanName(beanDefinition, getRegistry());
+    }
+
+    public final NamespaceHandlerResolver getNamespaceHandlerResolver() {
+        return this.namespaceHandlerResolver;
     }
 }

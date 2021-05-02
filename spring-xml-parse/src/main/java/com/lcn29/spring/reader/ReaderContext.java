@@ -14,7 +14,18 @@ public class ReaderContext {
 
     private final Resource resource;
 
-    public ReaderContext(Resource resource) {
+    private final SourceExtractor sourceExtractor;
+
+    public ReaderContext(Resource resource, SourceExtractor sourceExtractor) {
         this.resource = resource;
+        this.sourceExtractor = sourceExtractor;
+    }
+
+    public final Resource getResource() {
+        return this.resource;
+    }
+
+    public Object extractSource(Object sourceCandidate) {
+        return this.sourceExtractor.extractSource(sourceCandidate, this.resource);
     }
 }

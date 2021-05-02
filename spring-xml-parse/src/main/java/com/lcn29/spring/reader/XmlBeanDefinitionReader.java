@@ -1,6 +1,7 @@
 package com.lcn29.spring.reader;
 
 
+import com.lcn29.spring.bean.NamespaceHandlerResolver;
 import com.lcn29.spring.exception.BeanDefinitionStoreException;
 import com.lcn29.spring.registry.BeanDefinitionRegistry;
 import com.lcn29.spring.resource.EncodedResource;
@@ -22,6 +23,10 @@ import java.io.InputStream;
  * @date 2021-04-27 20:28
  */
 public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
+
+    private SourceExtractor sourceExtractor = new NullSourceExtractor();
+
+    private NamespaceHandlerResolver namespaceHandlerResolver;
 
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
         super(registry);
@@ -98,7 +103,19 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     }
 
     public XmlReaderContext createReaderContext(Resource resource) {
-        return new XmlReaderContext(resource, this);
+        return new XmlReaderContext(resource, sourceExtractor, this, getNamespaceHandlerResolver());
+    }
+
+    public NamespaceHandlerResolver getNamespaceHandlerResolver() {
+        if (this.namespaceHandlerResolver == null) {
+            this.namespaceHandlerResolver = createDefaultNamespaceHandlerResolver();
+        }
+        return this.namespaceHandlerResolver;
+    }
+
+    protected NamespaceHandlerResolver createDefaultNamespaceHandlerResolver() {
+        ClassLoader cl = (getResourceLoader() != null ? getResourceLoader().getClassLoader() : getBeanClassLoader());
+        return new DefaultNamespaceHandlerResolver(cl);
     }
 
 }

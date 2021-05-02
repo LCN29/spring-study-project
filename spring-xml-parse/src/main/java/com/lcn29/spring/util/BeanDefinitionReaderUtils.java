@@ -35,8 +35,11 @@ public class BeanDefinitionReaderUtils {
         }
     }
 
-    public static String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry, boolean isInnerBean)
-            throws BeanDefinitionStoreException {
+    public static String generateBeanName(BeanDefinition beanDefinition, BeanDefinitionRegistry registry) throws BeanDefinitionStoreException {
+        return generateBeanName(beanDefinition, registry, false);
+    }
+
+    public static String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry, boolean isInnerBean) throws BeanDefinitionStoreException {
 
         String generatedBeanName = definition.getBeanClassName();
         if (generatedBeanName == null) {

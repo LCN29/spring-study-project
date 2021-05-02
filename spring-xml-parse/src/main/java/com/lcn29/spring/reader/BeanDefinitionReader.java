@@ -19,4 +19,6 @@ public interface BeanDefinitionReader {
     BeanDefinitionRegistry getRegistry();
 
     ClassLoader getBeanClassLoader();
+
+    ResourceLoader getResourceLoader();
 }

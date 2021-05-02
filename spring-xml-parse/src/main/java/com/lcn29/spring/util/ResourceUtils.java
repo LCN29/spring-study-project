@@ -1,9 +1,6 @@
 package com.lcn29.spring.util;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 
 /**
  * <pre>
@@ -33,5 +30,9 @@ public class ResourceUtils {
 
     public static URI toURI(String location) throws URISyntaxException {
         return new URI(StringUtils.replace(location, " ", "%20"));
+    }
+
+    public static void useCachesIfNecessary(URLConnection con) {
+        con.setUseCaches(con.getClass().getSimpleName().startsWith("JNLP"));
     }
 }

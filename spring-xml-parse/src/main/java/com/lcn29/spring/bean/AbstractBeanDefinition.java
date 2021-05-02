@@ -1,6 +1,14 @@
 package com.lcn29.spring.bean;
 
 import com.lcn29.spring.reader.BeanMetadataAttributeAccessor;
+import com.lcn29.spring.reader.MethodOverrides;
+import com.lcn29.spring.reader.MutablePropertyValues;
+import com.lcn29.spring.resource.Resource;
+import com.sun.istack.internal.Nullable;
+import lombok.Data;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * <pre>
@@ -10,32 +18,44 @@ import com.lcn29.spring.reader.BeanMetadataAttributeAccessor;
  * @author lcn29
  * @date 2021-04-27 19:08
  */
+@Data
 public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccessor implements BeanDefinition {
 
     private volatile Object beanClass;
 
     private String factoryBeanName;
 
+    private String factoryMethodName;
+
     private String description;
 
-    public void setBeanClassName(String beanClassName) {
-        this.beanClass = beanClassName;
-    }
+    private String scope = "";
 
-    public void setBeanClass(Class<?> beanClass) {
-        this.beanClass = beanClass;
-    }
+    private boolean abstractFlag = false;
 
-    @Override
-    public String getBeanClassName() {
-        Object beanClassObject = this.beanClass;
-        if (beanClassObject instanceof Class) {
-            return ((Class<?>) beanClassObject).getName();
-        }
-        else {
-            return (String) beanClassObject;
-        }
-    }
+    private boolean lazyInit = false;
+
+    private Resource resource;
+
+    private int dependencyCheck = 0;
+
+    private int autowireMode = 0;
+
+    private String[] dependsOn;
+
+    private boolean autowireCandidate = true;
+
+    private boolean primary = false;
+
+
+    private MethodOverrides methodOverrides = new MethodOverrides();
+
+    private ConstructorArgumentValues constructorArgumentValues;
+
+    private MutablePropertyValues propertyValues;
+
+    private final Map<String, AutowireCandidateQualifier> qualifiers = new LinkedHashMap<>();
+
 
     public Class<?> getBeanClass() throws IllegalStateException {
         Object beanClassObject = this.beanClass;
@@ -50,15 +70,32 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
     }
 
     @Override
-    public String getFactoryBeanName() {
-        return this.factoryBeanName;
+    public String getBeanClassName() {
+        Object beanClassObject = this.beanClass;
+        if (beanClassObject instanceof Class) {
+            return ((Class<?>) beanClassObject).getName();
+        }
+        else {
+            return (String) beanClassObject;
+        }
     }
 
-    public String getDescription() {
-        return description;
+    public void setAbstract(boolean abstractFlag) {
+        this.abstractFlag = abstractFlag;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void addQualifier(AutowireCandidateQualifier qualifier) {
+        this.qualifiers.put(qualifier.getTypeName(), qualifier);
     }
+
+    @Override
+    public void setBeanClassName(@Nullable String beanClassName) {
+        this.beanClass = beanClassName;
+    }
+
+    @Override
+    public boolean isAbstract() {
+        return this.abstractFlag;
+    }
+
 }

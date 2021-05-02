@@ -1,7 +1,8 @@
 package com.lcn29.spring.reader;
 
+import com.lcn29.spring.bean.BeanNameGenerator;
+import com.lcn29.spring.bean.DefaultBeanNameGenerator;
 import com.lcn29.spring.registry.BeanDefinitionRegistry;
-import com.sun.istack.internal.Nullable;
 
 /**
  * <pre>
@@ -16,6 +17,10 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
     private final BeanDefinitionRegistry registry;
 
     private ClassLoader beanClassLoader;
+
+    private ResourceLoader resourceLoader;
+
+    private BeanNameGenerator beanNameGenerator = new DefaultBeanNameGenerator();
 
     protected AbstractBeanDefinitionReader(BeanDefinitionRegistry registry) {
         this.registry = registry;
@@ -33,6 +38,20 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
 
     public void setBeanClassLoader(ClassLoader beanClassLoader) {
         this.beanClassLoader = beanClassLoader;
+    }
+
+
+    public BeanNameGenerator getBeanNameGenerator() {
+        return this.beanNameGenerator;
+    }
+
+    @Override
+    public ResourceLoader getResourceLoader() {
+        return this.resourceLoader;
+    }
+
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
     }
 
 

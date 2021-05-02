@@ -1,6 +1,7 @@
-package com.lcn29.spring2.xml;
+package com.lcn29.spring.reader;
 
-import com.lcn29.spring2.resource.Resource;
+import com.lcn29.spring.resource.Resource;
+import com.sun.istack.internal.Nullable;
 
 /**
  * <pre>
@@ -8,8 +9,10 @@ import com.lcn29.spring2.resource.Resource;
  * </pre>
  *
  * @author lcn29
- * @date 2021-04-27 18:01
+ * @date 2021-05-02 17:28
  */
+@FunctionalInterface
+
 public interface SourceExtractor {
 
     Object extractSource(Object sourceCandidate, Resource definingResource);

@@ -18,6 +18,4 @@ public class GenericBeanDefinition extends AbstractBeanDefinition {
     public GenericBeanDefinition() {
         super();
     }
-
-
 }

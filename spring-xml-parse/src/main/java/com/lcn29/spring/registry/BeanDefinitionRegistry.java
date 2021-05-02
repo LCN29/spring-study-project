@@ -37,4 +37,6 @@ public interface BeanDefinitionRegistry extends AliasRegistry {
      * @return
      */
     int getBeanDefinitionCount();
+
+    boolean isBeanNameInUse(String beanName);
 }

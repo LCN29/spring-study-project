@@ -1,6 +1,7 @@
 package com.lcn29.spring.bean;
 
 
+import com.lcn29.spring.reader.MutablePropertyValues;
 import com.sun.istack.internal.Nullable;
 
 /**
@@ -30,4 +31,22 @@ public interface BeanDefinition extends BeanMetadataElement {
     String getParentName();
 
     void setParentName(String parentName);
+
+    MutablePropertyValues getPropertyValues();
+
+    void setScope(String scope);
+
+    String getScope();
+
+    boolean isAbstract();
+
+    ConstructorArgumentValues getConstructorArgumentValues();
+
+    default boolean hasConstructorArgumentValues() {
+        return !getConstructorArgumentValues().isEmpty();
+    }
+
+    void setLazyInit(boolean lazyInit);
+
+    void setBeanClassName(String beanClassName);
 }
