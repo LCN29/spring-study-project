@@ -1,12 +1,15 @@
 package com.lcn29.spring.bean.definition;
 
-import com.lcn29.spring.bean.definition.BeanDefinition;
-import com.lcn29.spring.bean.definition.attribute.BeanMetadataAttributeAccessor;
 import com.lcn29.spring.bean.definition.attribute.MutablePropertyValues;
 import com.lcn29.spring.bean.definition.constructor.ConstructorArgumentValues;
 import com.lcn29.spring.bean.definition.method.MethodOverrides;
+import com.lcn29.spring.bean.definition.qualifier.AutowireCandidateQualifier;
 import com.lcn29.spring.resource.Resource;
+import com.lcn29.spring.support.attribute.BeanMetadataAttributeAccessor;
 import lombok.Data;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * <pre>
@@ -33,6 +36,21 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
      * 是否懒加载
      */
     private boolean lazyInit = false;
+
+    /**
+     * 是否为抽象类
+     */
+    private boolean abstractFlag = false;
+
+    /**
+     * bean 工厂的名
+     */
+    private String factoryBeanName;
+
+    /**
+     * 自定义的描述
+     */
+    private String description;
 
     /**
      * 从哪个资源加载的
@@ -75,7 +93,13 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
     private MethodOverrides methodOverrides = new MethodOverrides();
 
     /**
+     * qualifier 标签集合
+     */
+    private final Map<String, AutowireCandidateQualifier> qualifiers = new LinkedHashMap<>();
+
+    /**
      * 获取 Class
+     *
      * @return
      * @throws IllegalStateException
      */
@@ -96,8 +120,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
         Object beanClassObject = this.beanClass;
         if (beanClassObject instanceof Class) {
             return ((Class<?>) beanClassObject).getName();
-        }
-        else {
+        } else {
             return (String) beanClassObject;
         }
     }
@@ -107,4 +130,21 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
         this.beanClass = beanClassName;
     }
 
+    @Override
+    public boolean isAbstract() {
+        return this.abstractFlag;
+    }
+
+    public void setAbstract(Boolean abstractFlag) {
+        this.abstractFlag = abstractFlag;
+    }
+
+    /**
+     * 添加 qualifier
+     *
+     * @param qualifier
+     */
+    public void addQualifier(AutowireCandidateQualifier qualifier) {
+        this.qualifiers.put(qualifier.getTypeName(), qualifier);
+    }
 }

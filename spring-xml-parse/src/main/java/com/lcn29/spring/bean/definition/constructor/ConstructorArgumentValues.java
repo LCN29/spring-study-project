@@ -1,8 +1,7 @@
 package com.lcn29.spring.bean.definition.constructor;
 
+import com.lcn29.spring.bean.definition.Mergeable;
 import com.lcn29.spring.source.BeanMetadataElement;
-import com.lcn29.spring.util.ClassUtils;
-import com.sun.istack.internal.Nullable;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -39,6 +38,62 @@ public class ConstructorArgumentValues {
         return (this.indexedArgumentValues.isEmpty() && this.genericArgumentValues.isEmpty());
     }
 
+    /**
+     * 带顺序的构造函数参数是否包含这个位置的参数了
+     *
+     * @param index
+     * @return
+     */
+    public boolean hasIndexedArgumentValue(int index) {
+        return this.indexedArgumentValues.containsKey(index);
+    }
+
+    /**
+     * 添加新的构造函数参数
+     *
+     * @param index
+     * @param value
+     */
+    public void addIndexedArgumentValue(int index, Object value) {
+        addIndexedArgumentValue(index, new ValueHolder(value));
+    }
+
+    /**
+     * 添加或者合并新的构造函数参数
+     *
+     * @param index
+     * @param newValue
+     */
+    public void addIndexedArgumentValue(int index, ValueHolder newValue) {
+        addOrMergeIndexedArgumentValue(index, newValue);
+    }
+
+    /**
+     * 添加构造函数到无不带顺序的构造函数参数列表
+     *
+     * @param value
+     */
+    public void addGenericArgumentValue(Object value) {
+        this.genericArgumentValues.add(new ValueHolder(value));
+    }
+
+    /**
+     * 添加或者合并新的构造函数参数
+     *
+     * @param key
+     * @param newValue
+     */
+    private void addOrMergeIndexedArgumentValue(Integer key, ValueHolder newValue) {
+        ValueHolder currentValue = this.indexedArgumentValues.get(key);
+        if (currentValue != null && newValue.getValue() instanceof Mergeable) {
+            Mergeable mergeable = (Mergeable) newValue.getValue();
+            if (mergeable.isMergeEnabled()) {
+                newValue.setValue(mergeable.merge(currentValue.getValue()));
+            }
+        }
+        this.indexedArgumentValues.put(key, newValue);
+    }
+
     @Data
     public static class ValueHolder implements BeanMetadataElement {
 
@@ -68,7 +123,7 @@ public class ConstructorArgumentValues {
         private Object convertedValue;
 
         /**
-         * 输入源
+         * 元数据源
          */
         private Object source;
 

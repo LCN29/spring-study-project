@@ -1,5 +1,7 @@
 package com.lcn29.spring.bean.definition;
 
+import com.lcn29.spring.bean.definition.attribute.MutablePropertyValues;
+import com.lcn29.spring.bean.definition.constructor.ConstructorArgumentValues;
 import com.lcn29.spring.source.BeanMetadataElement;
 
 /**
@@ -48,6 +50,34 @@ public interface BeanDefinition extends BeanMetadataElement {
     void setLazyInit(boolean lazyInit);
 
     /**
+     * 获取父级的名称
+     *
+     * @return
+     */
+    String getParentName();
+
+    /**
+     * 设置父级的名称
+     *
+     * @param parentName
+     */
+    void setParentName(String parentName);
+
+    /**
+     * 返回工厂 bean 的名
+     *
+     * @return
+     */
+    String getFactoryBeanName();
+
+    /**
+     * 设置工厂 Bean 的名
+     *
+     * @param factoryBeanName
+     */
+    void setFactoryBeanName(String factoryBeanName);
+
+    /**
      * 获取是否需要懒加载
      *
      * @return
@@ -85,4 +115,34 @@ public interface BeanDefinition extends BeanMetadataElement {
      * @return
      */
     boolean isAutowireCandidate();
+
+    /**
+     * 是否为抽象类, 是的话，不会进行初始化
+     *
+     * @return
+     */
+    boolean isAbstract();
+
+    /**
+     * 获取构造函数列表
+     *
+     * @return
+     */
+    ConstructorArgumentValues getConstructorArgumentValues();
+
+    /**
+     * 构造函数列数是否为空
+     *
+     * @return
+     */
+    default boolean hasConstructorArgumentValues() {
+        return !getConstructorArgumentValues().isEmpty();
+    }
+
+    /**
+     * 获取属性列表
+     *
+     * @return
+     */
+    MutablePropertyValues getPropertyValues();
 }

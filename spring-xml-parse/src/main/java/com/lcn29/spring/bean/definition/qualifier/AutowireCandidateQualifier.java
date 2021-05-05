@@ -1,6 +1,6 @@
 package com.lcn29.spring.bean.definition.qualifier;
 
-import com.lcn29.spring.bean.definition.attribute.BeanMetadataAttributeAccessor;
+import com.lcn29.spring.support.attribute.BeanMetadataAttributeAccessor;
 
 /**
  * <pre>

@@ -1,5 +1,7 @@
 package com.lcn29.spring.bean.definition.attribute;
 
+import com.lcn29.spring.support.attribute.AttributeAccessor;
+import com.lcn29.spring.support.attribute.BeanMetadataAttributeAccessor;
 import lombok.Data;
 
 /**
