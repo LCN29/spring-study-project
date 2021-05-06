@@ -2,21 +2,29 @@ package com.lcn29.spring.reader;
 
 import com.lcn29.spring.reader.document.BeanDefinitionDocumentReader;
 import com.lcn29.spring.reader.document.DefaultBeanDefinitionDocumentReader;
+import com.lcn29.spring.reader.loader.DefaultDocumentLoader;
+import com.lcn29.spring.reader.loader.DocumentLoader;
+import com.lcn29.spring.reader.loader.handler.SimpleSaxErrorHandler;
+import com.lcn29.spring.reader.loader.resolver.DelegatingEntityResolver;
+import com.lcn29.spring.reader.loader.resolver.ResourceEntityResolver;
 import com.lcn29.spring.registry.BeanDefinitionRegistry;
 import com.lcn29.spring.resource.EncodedResource;
 import com.lcn29.spring.resource.Resource;
+import com.lcn29.spring.resource.loader.ResourceLoader;
 import com.lcn29.spring.support.source.NullSourceExtractor;
 import com.lcn29.spring.support.source.SourceExtractor;
 import com.lcn29.spring.xml.DefaultNamespaceHandlerResolver;
 import com.lcn29.spring.xml.NamespaceHandlerResolver;
 import com.lcn29.spring.xml.context.XmlReaderContext;
 import org.w3c.dom.Document;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static com.lcn29.spring.reader.XmlValidationModeDetector.*;
 
 /**
  * <pre>
@@ -37,6 +45,34 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
      * 命名空间解析器
      */
     private NamespaceHandlerResolver namespaceHandlerResolver;
+
+    /**
+     * Document 解析器
+     */
+    private DocumentLoader documentLoader = new DefaultDocumentLoader();
+
+    /**
+     * Sax Document 解析中的节点通知
+     */
+    private EntityResolver entityResolver;
+
+    /**
+     * Sax Document 解析中异常通知
+     */
+    private ErrorHandler errorHandler = new SimpleSaxErrorHandler();
+
+    /**
+     * 命名空间检查
+     */
+    private boolean namespaceAware = false;
+
+
+    private final XmlValidationModeDetector validationModeDetector = new XmlValidationModeDetector();
+
+    /**
+     * 默认的校验方式
+     */
+    private int validationMode = VALIDATION_AUTO;
 
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
         super(registry);
@@ -89,7 +125,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
      */
     protected int doLoadBeanDefinitions(InputSource inputSource, Resource resource) {
         try {
-            Document doc = doLoadDocument(inputSource);
+            Document doc = doLoadDocument(inputSource, resource);
             int count = registerBeanDefinitions(doc, resource);
             return count;
         } catch (Exception e) {
@@ -115,16 +151,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
      * @return
      * @throws Exception
      */
-    private Document doLoadDocument(InputSource inputSource) throws Exception {
+    private Document doLoadDocument(InputSource inputSource, Resource resource) throws Exception {
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // 不使用命名空间
-        factory.setNamespaceAware(false);
-        // 不启用校验
-        factory.setValidating(false);
-        DocumentBuilder docBuilder = factory.newDocumentBuilder();
-        Document doc = docBuilder.parse(inputSource);
-        return doc;
+        return this.documentLoader.loadDocument(inputSource, getEntityResolver(), this.errorHandler,
+                getValidationModeForResource(resource), isNamespaceAware());
     }
 
     public XmlReaderContext createReaderContext(Resource resource) {
@@ -138,10 +168,68 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         return this.namespaceHandlerResolver;
     }
 
+    public int getValidationMode() {
+        return this.validationMode;
+    }
+
+    public boolean isNamespaceAware() {
+        return this.namespaceAware;
+    }
+
+    public void setValidating(boolean validating) {
+        this.validationMode = (validating ? VALIDATION_AUTO : VALIDATION_NONE);
+        this.namespaceAware = !validating;
+    }
+
+    public void setNamespaceAware(boolean namespaceAware) {
+        this.namespaceAware = namespaceAware;
+    }
+
     protected NamespaceHandlerResolver createDefaultNamespaceHandlerResolver() {
         ClassLoader cl = (getResourceLoader() != null ? getResourceLoader().getClassLoader() : getBeanClassLoader());
         return new DefaultNamespaceHandlerResolver(cl);
     }
 
+    protected EntityResolver getEntityResolver() {
+        if (this.entityResolver == null) {
+            // Determine default EntityResolver to use.
+            ResourceLoader resourceLoader = getResourceLoader();
+            if (resourceLoader != null) {
+                this.entityResolver = new ResourceEntityResolver(resourceLoader);
+            } else {
+                this.entityResolver = new DelegatingEntityResolver(getBeanClassLoader());
+            }
+        }
+        return this.entityResolver;
+    }
 
+    protected int getValidationModeForResource(Resource resource) {
+        int validationModeToUse = getValidationMode();
+        if (validationModeToUse != VALIDATION_AUTO) {
+            return validationModeToUse;
+        }
+        int detectedMode = detectValidationMode(resource);
+        if (detectedMode != VALIDATION_AUTO) {
+            return detectedMode;
+        }
+        return VALIDATION_XSD;
+    }
+
+    protected int detectValidationMode(Resource resource) {
+        InputStream inputStream;
+        try {
+            inputStream = resource.getInputStream();
+        } catch (IOException ex) {
+            throw new RuntimeException("Unable to determine validation mode for [" + resource + "]: cannot open InputStream. " +
+                    "Did you attempt to load directly from a SAX InputSource without specifying the " +
+                    "validationMode on your XmlBeanDefinitionReader instance?", ex);
+        }
+
+        try {
+            return this.validationModeDetector.detectValidationMode(inputStream);
+        } catch (IOException ex) {
+            throw new RuntimeException("Unable to determine validation mode for [" +
+                    resource + "]: an error occurred whilst reading from the InputStream.", ex);
+        }
+    }
 }

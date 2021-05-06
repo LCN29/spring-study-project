@@ -145,4 +145,25 @@ public interface BeanDefinition extends BeanMetadataElement {
      * @return
      */
     MutablePropertyValues getPropertyValues();
+
+    /**
+     * 设置工厂方法
+     *
+     * @param factoryMethodName
+     */
+    void setFactoryMethodName(String factoryMethodName);
+
+    /**
+     * 获取工厂方法
+     *
+     * @return
+     */
+    String getFactoryMethodName();
+
+    /**
+     * 资源描述
+     *
+     * @return
+     */
+    String getResourceDescription();
 }

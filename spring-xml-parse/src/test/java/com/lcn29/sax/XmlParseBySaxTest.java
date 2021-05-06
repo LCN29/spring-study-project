@@ -1,6 +1,9 @@
 package com.lcn29.sax;
 
+import com.lcn29.spring.resource.ClassPathResource;
 import org.junit.Test;
+
+import java.io.File;
 
 /**
  * <pre>
@@ -15,8 +18,10 @@ public class XmlParseBySaxTest {
     @Test
     public void test() throws Exception {
 
-        String xmlFilePath = "/Users/lcn/Project/GitHub/spring-study-project/spring-xml-parse/src/test/resources/spring-bean.xml";
+        // TODO 测试记得把下面的路径修改为自己的
+        String xmlFilePath = "/Users/lcn29/spring-study-project/spring-xml-parse/src/test/resources/spring-bean.xml";
         XmlParseBySax.parseXml(xmlFilePath);
+
 
     }
 }

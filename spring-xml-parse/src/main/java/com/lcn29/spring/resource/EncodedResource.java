@@ -36,7 +36,7 @@ public class EncodedResource implements InputStreamSource {
         this(resource, null, charset);
     }
 
-    private EncodedResource(Resource resource, @Nullable String encoding, @Nullable Charset charset) {
+    private EncodedResource(Resource resource, String encoding, Charset charset) {
         super();
         this.resource = resource;
         this.encoding = encoding;

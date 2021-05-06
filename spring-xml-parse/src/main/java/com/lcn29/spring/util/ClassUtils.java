@@ -1,6 +1,9 @@
 package com.lcn29.spring.util;
 
+import com.sun.istack.internal.Nullable;
+
 import java.lang.reflect.Array;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -22,6 +25,10 @@ public class ClassUtils {
      * 一些常用到的缓存, 如包装类型, 异常等
      */
     private static final Map<String, Class<?>> commonClassCache = new HashMap<>(64);
+
+    private static final char PACKAGE_SEPARATOR = '.';
+
+    private static final char PATH_SEPARATOR = '/';
 
     static {
 
@@ -180,6 +187,45 @@ public class ClassUtils {
         }
         return cl;
     }
+
+    /**
+     * 获取指定的 class 中的指定的方法名的个数
+     *
+     * @param clazz      指定的 class
+     * @param methodName 指定的方法名
+     * @return
+     */
+    public static int getMethodCountForName(Class<?> clazz, String methodName) {
+        int count = 0;
+        Method[] declaredMethods = clazz.getDeclaredMethods();
+        for (Method method : declaredMethods) {
+            if (methodName.equals(method.getName())) {
+                count++;
+            }
+        }
+        Class<?>[] ifcs = clazz.getInterfaces();
+        for (Class<?> ifc : ifcs) {
+            count += getMethodCountForName(ifc, methodName);
+        }
+        if (clazz.getSuperclass() != null) {
+            count += getMethodCountForName(clazz.getSuperclass(), methodName);
+        }
+        return count;
+    }
+
+    public static String classPackageAsResourcePath(Class<?> clazz) {
+        if (clazz == null) {
+            return "";
+        }
+        String className = clazz.getName();
+        int packageEndIndex = className.lastIndexOf(PACKAGE_SEPARATOR);
+        if (packageEndIndex == -1) {
+            return "";
+        }
+        String packageName = className.substring(0, packageEndIndex);
+        return packageName.replace(PACKAGE_SEPARATOR, PATH_SEPARATOR);
+    }
+
 
     /**
      * 向 commonClassCache 添加新的缓存

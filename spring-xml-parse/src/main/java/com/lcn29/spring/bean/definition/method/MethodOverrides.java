@@ -34,4 +34,17 @@ public class MethodOverrides {
     public void addOverride(MethodOverride override) {
         this.overrides.add(override);
     }
+
+    /**
+     * 集合是否为空
+     *
+     * @return
+     */
+    public boolean isEmpty() {
+        return this.overrides.isEmpty();
+    }
+
+    public Set<MethodOverride> getOverrides() {
+        return this.overrides;
+    }
 }

@@ -2,10 +2,12 @@ package com.lcn29.spring.bean.definition;
 
 import com.lcn29.spring.bean.definition.attribute.MutablePropertyValues;
 import com.lcn29.spring.bean.definition.constructor.ConstructorArgumentValues;
+import com.lcn29.spring.bean.definition.method.MethodOverride;
 import com.lcn29.spring.bean.definition.method.MethodOverrides;
 import com.lcn29.spring.bean.definition.qualifier.AutowireCandidateQualifier;
 import com.lcn29.spring.resource.Resource;
 import com.lcn29.spring.support.attribute.BeanMetadataAttributeAccessor;
+import com.lcn29.spring.util.ClassUtils;
 import lombok.Data;
 
 import java.util.LinkedHashMap;
@@ -88,6 +90,11 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
     private MutablePropertyValues propertyValues;
 
     /**
+     * 工厂方法
+     */
+    private String factoryMethodName;
+
+    /**
      * 方法集合
      */
     private MethodOverrides methodOverrides = new MethodOverrides();
@@ -146,5 +153,75 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
      */
     public void addQualifier(AutowireCandidateQualifier qualifier) {
         this.qualifiers.put(qualifier.getTypeName(), qualifier);
+    }
+
+    /**
+     * 校验这个 beanDefinition
+     */
+    public void validate() {
+        if (hasMethodOverrides() && getFactoryMethodName() != null) {
+            throw new RuntimeException("Cannot combine factory method with container-generated method overrides: " +
+                    "the factory method must create the concrete bean instance.");
+        }
+        if (hasBeanClass()) {
+            prepareMethodOverrides();
+        }
+    }
+
+    /**
+     * 判断这个 beanDefinition 是否有方法集合
+     *
+     * @return
+     */
+    public boolean hasMethodOverrides() {
+        return !this.methodOverrides.isEmpty();
+    }
+
+    @Override
+    public String getFactoryMethodName() {
+        return this.factoryMethodName;
+    }
+
+    @Override
+    public String getResourceDescription() {
+        return (this.resource != null ? this.resource.getDescription() : null);
+    }
+
+    @Override
+    public void setFactoryMethodName(String factoryMethodName) {
+        this.factoryMethodName = factoryMethodName;
+    }
+
+    /**
+     * 已经有 bean 对应的 class 了
+     *
+     * @return
+     */
+    public boolean hasBeanClass() {
+        return (this.beanClass instanceof Class);
+    }
+
+    /**
+     * 检查方法存在
+     */
+    public void prepareMethodOverrides() {
+        if (hasMethodOverrides()) {
+            getMethodOverrides().getOverrides().forEach(this::prepareMethodOverride);
+        }
+    }
+
+    /**
+     * 检查方法
+     *
+     * @param mo
+     */
+    protected void prepareMethodOverride(MethodOverride mo) {
+        int count = ClassUtils.getMethodCountForName(getBeanClass(), mo.getMethodName());
+        if (count == 0) {
+            throw new RuntimeException("Invalid method override: no method with name '" + mo.getMethodName() +
+                    "' on class [" + getBeanClassName() + "]");
+        } else if (count == 1) {
+            mo.setOverloaded(false);
+        }
     }
 }
