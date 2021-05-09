@@ -181,8 +181,8 @@ public class BeanDefinitionParserDelegate {
             aliases.addAll(Arrays.asList(nameArr));
         }
 
-        // 有别名, 取第一个作为 beanName
         String beanName = id;
+        // 没有 Id, 取第一个别名作为 beanName
         if (!StringUtils.hasText(beanName) && !aliases.isEmpty()) {
             beanName = aliases.remove(0);
         }

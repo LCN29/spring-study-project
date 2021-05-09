@@ -12,7 +12,7 @@ import lombok.Data;
  * @date 2021-05-05 17:20
  */
 @Data
-public class MethodOverride implements BeanMetadataElement {
+public abstract class MethodOverride implements BeanMetadataElement {
 
     /**
      * 方法名

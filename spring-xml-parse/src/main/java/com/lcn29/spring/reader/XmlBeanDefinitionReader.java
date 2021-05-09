@@ -66,7 +66,9 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
      */
     private boolean namespaceAware = false;
 
-
+    /**
+     * xml 文件校验模式检测器
+     */
     private final XmlValidationModeDetector validationModeDetector = new XmlValidationModeDetector();
 
     /**
@@ -152,7 +154,6 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
      * @throws Exception
      */
     private Document doLoadDocument(InputSource inputSource, Resource resource) throws Exception {
-
         return this.documentLoader.loadDocument(inputSource, getEntityResolver(), this.errorHandler,
                 getValidationModeForResource(resource), isNamespaceAware());
     }

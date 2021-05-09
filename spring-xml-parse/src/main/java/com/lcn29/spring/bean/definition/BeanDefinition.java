@@ -3,6 +3,7 @@ package com.lcn29.spring.bean.definition;
 import com.lcn29.spring.bean.definition.attribute.MutablePropertyValues;
 import com.lcn29.spring.bean.definition.constructor.ConstructorArgumentValues;
 import com.lcn29.spring.source.BeanMetadataElement;
+import com.lcn29.spring.support.attribute.AttributeAccessor;
 
 /**
  * <pre>
@@ -12,7 +13,7 @@ import com.lcn29.spring.source.BeanMetadataElement;
  * @author lcn29
  * @date 2021-05-03 15:15
  */
-public interface BeanDefinition extends BeanMetadataElement {
+public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 
     /**
      * 获取 bean 的 class 名
