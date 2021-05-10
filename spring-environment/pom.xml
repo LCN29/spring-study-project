@@ -10,6 +10,6 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>spring-enviroment</artifactId>
+    <artifactId>spring-environment</artifactId>
 
 </project>
