@@ -1,6 +1,7 @@
 package com.lcn29.registry;
 
 import com.lcn29.converter.Converter;
+import com.lcn29.converter.GenericConverter;
 
 /**
  * <pre>

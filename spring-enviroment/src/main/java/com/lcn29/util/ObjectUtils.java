@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 /**
  * <pre>
- *
+ * 对象工具类
  * </pre>
  *
- * @author
+ * @author lcn29
  * @date 2021-05-10  18:23
  */
 public class ObjectUtils {
@@ -98,4 +98,7 @@ public class ObjectUtils {
 		return obj.hashCode();
 	}
 
+	public static boolean isEmpty(Object[] array) {
+		return (array == null || array.length == 0);
+	}
 }

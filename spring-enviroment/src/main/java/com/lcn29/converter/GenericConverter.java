@@ -1,5 +1,7 @@
 package com.lcn29.converter;
 
+import com.lcn29.convert.TypeDescriptor;
+
 import java.util.Set;
 
 /**
