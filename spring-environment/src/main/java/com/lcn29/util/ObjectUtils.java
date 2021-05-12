@@ -101,4 +101,16 @@ public class ObjectUtils {
 	public static boolean isEmpty(Object[] array) {
 		return (array == null || array.length == 0);
 	}
+
+	public static boolean containsElement(Object[] array, Object element) {
+		if (array == null) {
+			return false;
+		}
+		for (Object arrayEle : array) {
+			if (nullSafeEquals(arrayEle, element)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

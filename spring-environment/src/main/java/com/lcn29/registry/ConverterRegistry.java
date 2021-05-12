@@ -1,7 +1,8 @@
 package com.lcn29.registry;
 
-import com.lcn29.converter.Converter;
-import com.lcn29.converter.GenericConverter;
+
+import com.lcn29.convert.converter.Converter;
+import com.lcn29.convert.converter.GenericConverter;
 
 /**
  * <pre>
@@ -14,7 +15,6 @@ import com.lcn29.converter.GenericConverter;
 public interface ConverterRegistry {
 
 	void addConverter(Converter<?, ?> converter);
-
 
 	<S, T> void addConverter(Class<S> sourceType, Class<T> targetType, Converter<? super S, ? extends T> converter);
 

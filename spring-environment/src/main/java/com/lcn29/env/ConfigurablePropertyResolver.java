@@ -1,4 +1,4 @@
-package com.lcn29.resolver;
+package com.lcn29.env;
 
 import com.lcn29.convert.support.ConfigurableConversionService;
 import com.lcn29.exception.MissingRequiredPropertiesException;
@@ -8,8 +8,8 @@ import com.lcn29.exception.MissingRequiredPropertiesException;
  *
  * </pre>
  *
- * @author lcn29
- * @date 2021-05-10  17:45
+ * @author
+ * @date 2021-05-12  17:31
  */
 public interface ConfigurablePropertyResolver extends PropertyResolver{
 
