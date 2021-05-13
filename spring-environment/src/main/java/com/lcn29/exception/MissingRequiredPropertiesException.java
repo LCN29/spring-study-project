@@ -15,7 +15,7 @@ public class MissingRequiredPropertiesException extends IllegalStateException {
 
 	private final Set<String> missingRequiredProperties = new LinkedHashSet<>();
 
-	void addMissingRequiredProperty(String key) {
+	public void addMissingRequiredProperty(String key) {
 		this.missingRequiredProperties.add(key);
 	}
 

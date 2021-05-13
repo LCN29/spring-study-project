@@ -1,14 +1,17 @@
 package com.lcn29.convert;
 
 import com.lcn29.core.ResolvableType;
+import com.lcn29.util.ClassUtils;
 import com.lcn29.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * <pre>
@@ -21,7 +24,6 @@ import java.util.Map;
 public class TypeDescriptor implements Serializable {
 
 	private final Class<?> type;
-
 
 	private static final Annotation[] EMPTY_ANNOTATION_ARRAY = new Annotation[0];
 
@@ -39,7 +41,6 @@ public class TypeDescriptor implements Serializable {
 		}
 	}
 
-
 	private final ResolvableType resolvableType;
 
 	private final AnnotatedElementAdapter annotatedElement;
@@ -50,13 +51,105 @@ public class TypeDescriptor implements Serializable {
 		this.annotatedElement = new AnnotatedElementAdapter(annotations);
 	}
 
-
 	public static TypeDescriptor valueOf( Class<?> type) {
 		if (type == null) {
 			type = Object.class;
 		}
 		TypeDescriptor desc = commonTypesCache.get(type);
 		return (desc != null ? desc : new TypeDescriptor(ResolvableType.forClass(type), null, null));
+	}
+
+	public ResolvableType getResolvableType() {
+		return this.resolvableType;
+	}
+
+	public Class<?> getType() {
+		return this.type;
+	}
+
+	public Class<?> getObjectType() {
+		return ClassUtils.resolvePrimitiveIfNecessary(getType());
+	}
+
+	public boolean isAssignableTo(TypeDescriptor typeDescriptor) {
+		boolean typesAssignable = typeDescriptor.getObjectType().isAssignableFrom(getObjectType());
+		if (!typesAssignable) {
+			return false;
+		}
+		if (isArray() && typeDescriptor.isArray()) {
+			return isNestedAssignable(getElementTypeDescriptor(), typeDescriptor.getElementTypeDescriptor());
+		}
+		else if (isCollection() && typeDescriptor.isCollection()) {
+			return isNestedAssignable(getElementTypeDescriptor(), typeDescriptor.getElementTypeDescriptor());
+		}
+		else if (isMap() && typeDescriptor.isMap()) {
+			return isNestedAssignable(getMapKeyTypeDescriptor(), typeDescriptor.getMapKeyTypeDescriptor()) &&
+					isNestedAssignable(getMapValueTypeDescriptor(), typeDescriptor.getMapValueTypeDescriptor());
+		}
+		else {
+			return true;
+		}
+	}
+
+	public boolean isArray() {
+		return getType().isArray();
+	}
+
+	public boolean isCollection() {
+		return Collection.class.isAssignableFrom(getType());
+	}
+
+	public boolean isMap() {
+		return Map.class.isAssignableFrom(getType());
+	}
+
+	public static TypeDescriptor forObject(Object source) {
+		return (source != null ? valueOf(source.getClass()) : null);
+	}
+
+	public TypeDescriptor getMapKeyTypeDescriptor() {
+		return getRelatedIfResolvable(this, getResolvableType().asMap().getGeneric(0));
+	}
+
+	public TypeDescriptor getMapValueTypeDescriptor() {
+		return getRelatedIfResolvable(this, getResolvableType().asMap().getGeneric(1));
+	}
+
+	public TypeDescriptor getElementTypeDescriptor() {
+		if (getResolvableType().isArray()) {
+			return new TypeDescriptor(getResolvableType().getComponentType(), null, getAnnotations());
+		}
+		if (Stream.class.isAssignableFrom(getType())) {
+			return getRelatedIfResolvable(this, getResolvableType().as(Stream.class).getGeneric(0));
+		}
+		return getRelatedIfResolvable(this, getResolvableType().asCollection().getGeneric(0));
+	}
+
+	public Annotation[] getAnnotations() {
+		return this.annotatedElement.getAnnotations();
+	}
+
+	public ResolvableType getGeneric(int... indexes) {
+		ResolvableType[] generics = getGenerics();
+		if (indexes == null || indexes.length == 0) {
+			return (generics.length == 0 ? NONE : generics[0]);
+		}
+		ResolvableType generic = this;
+		for (int index : indexes) {
+			generics = generic.getGenerics();
+			if (index < 0 || index >= generics.length) {
+				return NONE;
+			}
+			generic = generics[index];
+		}
+		return generic;
+	}
+
+	private static TypeDescriptor getRelatedIfResolvable(TypeDescriptor source, ResolvableType type) {
+		if (type.resolve() == null) {
+			return null;
+		}
+		return new TypeDescriptor(type, null, source.getAnnotations());
 	}
 
 	private class AnnotatedElementAdapter implements AnnotatedElement, Serializable {
@@ -117,5 +210,11 @@ public class TypeDescriptor implements Serializable {
 			return TypeDescriptor.this.toString();
 		}
 
+	}
+
+	private boolean isNestedAssignable(TypeDescriptor nestedTypeDescriptor, TypeDescriptor otherNestedTypeDescriptor) {
+
+		return (nestedTypeDescriptor == null || otherNestedTypeDescriptor == null ||
+				nestedTypeDescriptor.isAssignableTo(otherNestedTypeDescriptor));
 	}
 }

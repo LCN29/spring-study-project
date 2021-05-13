@@ -36,7 +36,7 @@ public class StringUtils {
 			return new String[0];
 		}
 		if (delimiter == null) {
-			return new String[] {str};
+			return new String[]{str};
 		}
 
 		List<String> result = new ArrayList<>();
@@ -92,6 +92,18 @@ public class StringUtils {
 
 	public static boolean hasLength(String str) {
 		return (str != null && !str.isEmpty());
+	}
+
+	public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
+		if (index + substring.length() > str.length()) {
+			return false;
+		}
+		for (int i = 0; i < substring.length(); i++) {
+			if (str.charAt(index + i) != substring.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static boolean containsText(CharSequence str) {

@@ -30,4 +30,12 @@ public class ClassUtils {
             return (resolvedWrapper != null && lhsType.isAssignableFrom(resolvedWrapper));
         }
     }
+
+    public static boolean isAssignableValue(Class<?> type, Object value) {
+        return (value != null ? isAssignable(type, value.getClass()) : !type.isPrimitive());
+    }
+
+    public static Class<?> resolvePrimitiveIfNecessary(Class<?> clazz) {
+        return (clazz.isPrimitive() && clazz != void.class ? primitiveTypeToWrapperMap.get(clazz) : clazz);
+    }
 }
