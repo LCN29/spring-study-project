@@ -2,6 +2,7 @@ package com.lcn29.env;
 
 import com.lcn29.convert.ConversionService;
 import com.lcn29.convert.support.ConfigurableConversionService;
+import com.lcn29.convert.support.DefaultConversionService;
 import com.lcn29.exception.MissingRequiredPropertiesException;
 import com.lcn29.util.ClassUtils;
 import com.lcn29.util.PropertyPlaceholderHelper;

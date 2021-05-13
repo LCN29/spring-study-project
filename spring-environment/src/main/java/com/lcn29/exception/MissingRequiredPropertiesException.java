@@ -8,7 +8,7 @@ import java.util.Set;
  *
  * </pre>
  *
- * @author
+ * @author lcn29
  * @date 2021-05-10  17:49
  */
 public class MissingRequiredPropertiesException extends IllegalStateException {

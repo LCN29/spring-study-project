@@ -1,9 +1,6 @@
 package com.lcn29.util;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.UndeclaredThrowableException;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,11 +21,11 @@ public class ReflectionUtils {
     private static final Map<Class<?>, Method[]> declaredMethodsCache = new ConcurrentReferenceHashMap<>(256);
 
 
-    public static Object invokeMethod(Method method,  Object target) {
+    public static Object invokeMethod(Method method, Object target) {
         return invokeMethod(method, target, new Object[0]);
     }
 
-    public static Object invokeMethod(Method method,  Object target,  Object... args) {
+    public static Object invokeMethod(Method method, Object target, Object... args) {
         try {
             return method.invoke(target, args);
         } catch (Exception ex) {
@@ -71,7 +68,7 @@ public class ReflectionUtils {
         return findMethod(clazz, name, new Class<?>[0]);
     }
 
-    public static Method findMethod(Class<?> clazz, String name,  Class<?>... paramTypes) {
+    public static Method findMethod(Class<?> clazz, String name, Class<?>... paramTypes) {
         Class<?> searchType = clazz;
         while (searchType != null) {
             Method[] methods = (searchType.isInterface() ? searchType.getMethods() : getDeclaredMethods(searchType));
@@ -84,6 +81,28 @@ public class ReflectionUtils {
             searchType = searchType.getSuperclass();
         }
         return null;
+    }
+
+    public static void makeAccessible(Constructor<?> ctor) {
+        if ((!Modifier.isPublic(ctor.getModifiers())
+                || !Modifier.isPublic(ctor.getDeclaringClass().getModifiers()))
+                && !ctor.isAccessible()) {
+            ctor.setAccessible(true);
+        }
+    }
+
+    public static void makeAccessible(Method method) {
+        if ((!Modifier.isPublic(method.getModifiers()) ||
+                !Modifier.isPublic(method.getDeclaringClass().getModifiers())) && !method.isAccessible()) {
+            method.setAccessible(true);
+        }
+    }
+
+    public static <T> Constructor<T> accessibleConstructor(Class<T> clazz, Class<?>... parameterTypes) throws NoSuchMethodException {
+
+        Constructor<T> ctor = clazz.getDeclaredConstructor(parameterTypes);
+        makeAccessible(ctor);
+        return ctor;
     }
 
     private static Method[] getDeclaredMethods(Class<?> clazz) {
@@ -100,13 +119,11 @@ public class ReflectionUtils {
                         result[index] = defaultMethod;
                         index++;
                     }
-                }
-                else {
+                } else {
                     result = declaredMethods;
                 }
                 declaredMethodsCache.put(clazz, (result.length == 0 ? EMPTY_METHOD_ARRAY : result));
-            }
-            catch (Throwable ex) {
+            } catch (Throwable ex) {
                 throw new IllegalStateException("Failed to introspect Class [" + clazz.getName() +
                         "] from ClassLoader [" + clazz.getClassLoader() + "]", ex);
             }

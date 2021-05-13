@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * </pre>
  *
- * @author
+ * @author lcn29
  * @date 2021-05-10  18:05
  */
 public interface GenericConverter {
@@ -27,6 +27,14 @@ public interface GenericConverter {
 		public ConvertiblePair(Class<?> sourceType, Class<?> targetType) {
 			this.sourceType = sourceType;
 			this.targetType = targetType;
+		}
+
+		public Class<?> getSourceType() {
+			return this.sourceType;
+		}
+
+		public Class<?> getTargetType() {
+			return this.targetType;
 		}
 	}
 }

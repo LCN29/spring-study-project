@@ -1,12 +1,15 @@
-package com.lcn29.env;
+package com.lcn29.convert.support;
 
 import com.lcn29.convert.TypeDescriptor;
 import com.lcn29.convert.converter.*;
-import com.lcn29.convert.support.ConfigurableConversionService;
+import com.lcn29.convert.converter.GenericConverter.ConvertiblePair;
 import com.lcn29.core.DecoratingProxy;
 import com.lcn29.core.ResolvableType;
+import com.lcn29.exception.ConversionFailedException;
+import com.lcn29.exception.ConverterNotFoundException;
+import com.lcn29.util.ClassUtils;
 import com.lcn29.util.ConcurrentReferenceHashMap;
-import com.lcn29.convert.converter.GenericConverter.ConvertiblePair;
+import com.lcn29.util.StringUtils;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -16,7 +19,7 @@ import java.util.*;
  *
  * </pre>
  *
- * @author
+ * @author lcn29
  * @date 2021-05-12  18:21
  */
 public class GenericConversionService implements ConfigurableConversionService {
@@ -446,6 +449,30 @@ public class GenericConversionService implements ConfigurableConversionService {
 				return convertNullSource(sourceType, targetType);
 			}
 			return this.converterFactory.getConverter(targetType.getObjectType()).convert(source);
+		}
+	}
+
+	private static class ConvertersForPair {
+
+		private final LinkedList<GenericConverter> converters = new LinkedList<>();
+
+		public void add(GenericConverter converter) {
+			this.converters.addFirst(converter);
+		}
+
+		public GenericConverter getConverter(TypeDescriptor sourceType, TypeDescriptor targetType) {
+			for (GenericConverter converter : this.converters) {
+				if (!(converter instanceof ConditionalGenericConverter) ||
+						((ConditionalGenericConverter) converter).matches(sourceType, targetType)) {
+					return converter;
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public String toString() {
+			return StringUtils.collectionToCommaDelimitedString(this.converters);
 		}
 	}
 

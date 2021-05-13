@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * </pre>
  *
- * @author
+ * @author lcn29
  * @date 2021-05-12  18:08
  */
 public class MapPropertySource extends EnumerablePropertySource<Map<String, Object>> {
