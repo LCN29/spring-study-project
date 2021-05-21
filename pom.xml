@@ -13,6 +13,7 @@
         <module>tiny-spring</module>
         <module>spring-xml-parse</module>
         <module>spring-environment</module>
+        <module>spring-code</module>
     </modules>
 
     <properties>
