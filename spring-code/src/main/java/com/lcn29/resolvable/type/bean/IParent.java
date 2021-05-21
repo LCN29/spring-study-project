@@ -8,5 +8,5 @@ package com.lcn29.resolvable.type.bean;
  * @author lcn29
  * @date 2021-05-21  9:50
  */
-public interface IParent<T> {
+public interface IParent<T, S> {
 }
