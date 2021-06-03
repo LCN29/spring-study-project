@@ -22,6 +22,7 @@ Seven through ten is the gradual evolution of Aop!
 1. ResourceLoader loads XMl Files and convert to BeanDefinition
 2. put the BeanDefinition in the BeanFactory container
 3. ApplicationContext executions the whole process
+4. Environment
 
 
 // TODO
